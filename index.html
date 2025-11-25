@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Velha Ultra Premium</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animação de fundo animado */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.05" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+            background-size: cover;
+            pointer-events: none;
+            animation: wave 10s linear infinite;
+        }
+
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .screen {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .screen.active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Menu Principal */
+        .main-menu {
+            text-align: center;
+        }
+
+        .game-title {
+            font-size: 4em;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: titleFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes titleFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .menu-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .menu-btn {
+            padding: 20px 60px;
+            font-size: 1.3em;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            color: white;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .menu-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .menu-btn:hover::before {
+            left: 100%;
+        }
+
+        .menu-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .menu-btn.secondary {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+
+        /* Tela de Configurações de Jogadores */
+        .player-setup {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .setup-title {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .player-input-group {
+            margin-bottom: 25px;
+        }
+
+        .player-input-group label {
+            display: block;
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .player-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1em;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .player-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .setup-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .setup-btn {
+            flex: 1;
+            padding: 15px;
+            font-size: 1.1em;
+            font-weight: 600;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .setup-btn.primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .setup-btn.secondary {
+            background: #e0e0e0;
+            color: #666;
+        }
+
+        .setup-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Tela de Configurações */
+        .settings-screen {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .settings-title {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .setting-item {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+
+        .setting-label {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 10px;
+            font-weight: 600;
+            display: block;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: #ccc;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 26px;
+            height: 26px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-switch.active::after {
+            transform: translateX(30px);
+        }
+
+        /* Container do Jogo */
+        .game-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+            backdrop-filter: blur(10px);
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(240, 147, 251, 0.4);
+        }
+
+        .player-names {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+        }
+
+        .player-name {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .current-player-indicator {
+            padding: 5px 15px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #333;
+            font-weight: bold;
+            animation: pulse 1s ease infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+        }
+
+        .scores {
+            display: flex;
+            gap: 20px;
+            font-size: 0.9em;
+        }
+
+        .score-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .score-label {
+            font-size: 0.8em;
+            color: #666;
+            margin-bottom: 3px;
+        }
+
+        .score-value {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #e0e0e0, #f5f5f5);
+            border-radius: 20px;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .cell {
+            aspect-ratio: 1;
+            background: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 3em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .cell:hover:not(.cell-x):not(.cell-o) {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        }
+
+        .cell-x {
+            color: #667eea;
+            background: linear-gradient(135deg, #f0f3ff, #e8ecff);
+            animation: popIn 0.3s ease;
+        }
+
+        .cell-o {
+            color: #f5576c;
+            background: linear-gradient(135deg, #ffeef0, #ffe0e5);
+            animation: popIn 0.3s ease;
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0) rotate(180deg);
+            }
+            50% {
+                transform: scale(1.2) rotate(90deg);
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .cell.winner {
+            animation: winnerPulse 0.5s ease infinite alternate;
+            background: linear-gradient(135deg, #ffd700, #ffed4e) !important;
+        }
+
+        @keyframes winnerPulse {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1.1);
+            }
+        }
+
+        .game-controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .game-btn {
+            padding: 12px 30px;
+            font-size: 1em;
+            font-weight: 600;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            box-shadow: 0 4px 15px rgba(240, 147, 251, 0.4);
+        }
+
+        .game-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Modal de Mensagem */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 400px;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-title {
+            font-size: 2em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .modal-text {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        /* Confete */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #ffd700;
+            animation: confettiFall 3s linear forwards;
+        }
+
+        @keyframes confettiFall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Histórico */
+        .history {
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+        }
+
+        .history-title {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            padding: 10px;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9em;
+            animation: slideIn 0.3s ease;
+        }
+
+        .winner-badge {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Responsivo */
+        @media (max-width: 480px) {
+            .game-title {
+                font-size: 3em;
+            }
+
+            .menu-btn {
+                padding: 15px 40px;
+                font-size: 1.1em;
+            }
+
+            .game-container {
+                padding: 20px;
+            }
+
+            .cell {
+                font-size: 2em;
+            }
+
+            .game-info {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Tela Principal -->
+    <div class="screen active" id="mainMenu">
+        <div class="main-menu">
+            <h1 class="game-title">🎮 JOGO DA VELHA</h1>
+            <div class="menu-buttons">
+                <button class="menu-btn" onclick="showPlayerSetup()">
+                    🎯 Jogar
+                </button>
+                <button class="menu-btn secondary" onclick="showSettings()">
+                    ⚙️ Configurações
+                </button>
+                <button class="menu-btn secondary" onclick="showHistory()">
+                    📊 Histórico
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tela de Configuração dos Jogadores -->
+    <div class="screen" id="playerSetup">
+        <div class="player-setup">
+            <h2 class="setup-title">👥 Configurar Jogadores</h2>
+            <div class="player-input-group">
+                <label for="player1Name">Nome do Jogador 1 (X)</label>
+                <input type="text" id="player1Name" class="player-input" placeholder="Digite o nome..." maxlength="20">
+            </div>
+            <div class="player-input-group">
+                <label for="player2Name">Nome do Jogador 2 (O)</label>
+                <input type="text" id="player2Name" class="player-input" placeholder="Digite o nome..." maxlength="20">
+            </div>
+            <div class="setup-buttons">
+                <button class="setup-btn secondary" onclick="showMainMenu()">← Voltar</button>
+                <button class="setup-btn primary" onclick="startGame()">Começar Jogo →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tela de Configurações -->
+    <div class="screen" id="settingsScreen">
+        <div class="settings-screen">
+            <h2 class="settings-title">⚙️ Configurações</h2>
+            
+            <div class="setting-item">
+                <label class="setting-label">Efeitos Sonoros</label>
+                <div class="toggle-switch" id="soundToggle" onclick="toggleSetting('sound')"></div>
+            </div>
+            
+            <div class="setting-item">
+                <label class="setting-label">Animações</label>
+                <div class="toggle-switch active" id="animationToggle" onclick="toggleSetting('animation')"></div>
+            </div>
+            
+            <div class="setting-item">
+                <label class="setting-label">Confetes na Vitória</label>
+                <div class="toggle-switch active" id="confettiToggle" onclick="toggleSetting('confetti')"></div>
+            </div>
+            
+            <div class="setting-item">
+                <label class="setting-label">Tema Escuro</label>
+                <div class="toggle-switch" id="darkThemeToggle" onclick="toggleSetting('darkTheme')"></div>
+            </div>
+
+            <div class="setup-buttons">
+                <button class="setup-btn secondary" onclick="showMainMenu()">← Voltar</button>
+                <button class="setup-btn primary" onclick="resetAllData()">🗑️ Zerar Todos os Dados</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tela do Jogo -->
+    <div class="screen" id="gameScreen">
+        <div class="game-container">
+            <div class="game-header">
+                <button class="back-btn" onclick="showMainMenu()">← Menu</button>
+            </div>
+
+            <div class="player-names">
+                <div class="player-name">
+                    <span id="player1Display">Jogador 1</span>
+                    <span class="player-indicator player-x">X</span>
+                </div>
+                <div class="current-player-indicator" id="currentTurnIndicator">VEZ DE X</div>
+                <div class="player-name">
+                    <span id="player2Display">Jogador 2</span>
+                    <span class="player-indicator player-o">O</span>
+                </div>
+            </div>
+
+            <div class="game-info">
+                <div class="scores">
+                    <div class="score-item">
+                        <span class="score-label" id="player1Label">Jogador 1</span>
+                        <span class="score-value" id="scoreX">0</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="score-label">Empates</span>
+                        <span class="score-value" id="scoreDraw">0</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="score-label" id="player2Label">Jogador 2</span>
+                        <span class="score-value" id="scoreO">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <section class="game-board" id="gameBoard">
+                <button class="cell" data-index="0"></button>
+                <button class="cell" data-index="1"></button>
+                <button class="cell" data-index="2"></button>
+                <button class="cell" data-index="3"></button>
+                <button class="cell" data-index="4"></button>
+                <button class="cell" data-index="5"></button>
+                <button class="cell" data-index="6"></button>
+                <button class="cell" data-index="7"></button>
+                <button class="cell" data-index="8"></button>
+            </section>
+
+            <div class="game-controls">
+                <button class="game-btn btn-primary" onclick="resetGame()">Nova Partida</button>
+                <button class="game-btn btn-secondary" onclick="showPlayerSetup()">Trocar Jogadores</button>
+            </div>
+
+            <section class="history">
+                <h3 class="history-title">📊 Últimas Partidas</h3>
+                <div class="history-list" id="historyList">
+                    <p style="color: #999; text-align: center;">Nenhuma partida jogada ainda</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="gameModal">
+        <div class="modal-content">
+            <h2 class="modal-title" id="modalTitle">Título</h2>
+            <p class="modal-text" id="modalText">Texto</p>
+            <div class="modal-buttons">
+                <button class="game-btn btn-primary" onclick="closeModal()">OK</button>
+                <button class="game-btn btn-secondary" onclick="resetGame(); closeModal()">Nova Partida</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Estado do Jogo
+        let gameState = {
+            currentPlayer: 'X',
+            gameBoard: ['', '', '', '', '', '', '', '', ''],
+            gameActive: true,
+            player1Name: 'Jogador 1',
+            player2Name: 'Jogador 2',
+            scores: {
+                X: 0,
+                O: 0,
+                draw: 0
+            },
+            gameHistory: [],
+            settings: {
+                sound: false,
+                animation: true,
+                confetti: true,
+                darkTheme: false
+            }
+        };
+
+        const winningConditions = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6]
+        ];
+
+        // Carregar dados do localStorage
+        function loadGameData() {
+            const savedData = localStorage.getItem('ticTacToeUltraData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                gameState = { ...gameState, ...data };
+                updateSettingsDisplay();
+            }
+        }
+
+        // Salvar dados no localStorage
+        function saveGameData() {
+            localStorage.setItem('ticTacToeUltraData', JSON.stringify(gameState));
+        }
+
+        // Navegação entre telas
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function showMainMenu() {
+            showScreen('mainMenu');
+        }
+
+        function showPlayerSetup() {
+            showScreen('playerSetup');
+            document.getElementById('player1Name').value = gameState.player1Name;
+            document.getElementById('player2Name').value = gameState.player2Name;
+        }
+
+        function showSettings() {
+            showScreen('settingsScreen');
+        }
+
+        function showHistory() {
+            showScreen('gameScreen');
+            updateHistoryDisplay();
+        }
+
+        function startGame() {
+            const player1Input = document.getElementById('player1Name').value.trim();
+            const player2Input = document.getElementById('player2Name').value.trim();
+
+            gameState.player1Name = player1Input || 'Jogador 1';
+            gameState.player2Name = player2Input || 'Jogador 2';
+
+            document.getElementById('player1Display').textContent = gameState.player1Name;
+            document.getElementById('player2Display').textContent = gameState.player2Name;
+            document.getElementById('player1Label').textContent = gameState.player1Name;
+            document.getElementById('player2Label').textContent = gameState.player2Name;
+
+            resetGame();
+            showScreen('gameScreen');
+            saveGameData();
+        }
+
+        // Configurações
+        function toggleSetting(setting) {
+            gameState.settings[setting] = !gameState.settings[setting];
+            const toggle = document.getElementById(setting + 'Toggle');
+            toggle.classList.toggle('active');
+            
+            if (setting === 'darkTheme') {
+                document.body.classList.toggle('dark-theme');
+            }
+            
+            saveGameData();
+        }
+
+        function updateSettingsDisplay() {
+            Object.keys(gameState.settings).forEach(setting => {
+                const toggle = document.getElementById(setting + 'Toggle');
+                if (toggle) {
+                    if (gameState.settings[setting]) {
+                        toggle.classList.add('active');
+                    } else {
+                        toggle.classList.remove('active');
+                    }
+                }
+            });
+        }
+
+        function resetAllData() {
+            if (confirm('Tem certeza que deseja zerar TODOS os dados? Isso inclui placar, histórico e configurações.')) {
+                gameState = {
+                    currentPlayer: 'X',
+                    gameBoard: ['', '', '', '', '', '', '', '', ''],
+                    gameActive: true,
+                    player1Name: 'Jogador 1',
+                    player2Name: 'Jogador 2',
+                    scores: { X: 0, O: 0, draw: 0 },
+                    gameHistory: [],
+                    settings: {
+                        sound: false,
+                        animation: true,
+                        confetti: true,
+                        darkTheme: false
+                    }
+                };
+                localStorage.removeItem('ticTacToeUltraData');
+                updateSettingsDisplay();
+                alert('Todos os dados foram resetados com sucesso!');
+            }
+        }
+
+        // Lógica do Jogo
+        function handleCellClick(event) {
+            const cell = event.target;
+            const index = parseInt(cell.getAttribute('data-index'));
+
+            if (gameState.gameBoard[index] !== '' || !gameState.gameActive) {
+                return;
+            }
+
+            gameState.gameBoard[index] = gameState.currentPlayer;
+            cell.textContent = gameState.currentPlayer;
+            cell.classList.add(`cell-${gameState.currentPlayer.toLowerCase()}`);
+
+            if (gameState.settings.sound) {
+                playSound('move');
+            }
+
+            checkResult();
+        }
+
+        function checkResult() {
+            let roundWon = false;
+            let winningCombination = [];
+
+            for (let i = 0; i < winningConditions.length; i++) {
+                const [a, b, c] = winningConditions[i];
+                if (gameState.gameBoard[a] && 
+                    gameState.gameBoard[a] === gameState.gameBoard[b] && 
+                    gameState.gameBoard[a] === gameState.gameBoard[c]) {
+                    roundWon = true;
+                    winningCombination = [a, b, c];
+                    break;
+                }
+            }
+
+            if (roundWon) {
+                announceWinner(gameState.currentPlayer, winningCombination);
+                gameState.scores[gameState.currentPlayer]++;
+                updateScoreDisplay();
+                addToHistory(gameState.currentPlayer);
+                gameState.gameActive = false;
+                saveGameData();
+                return;
+            }
+
+            if (!gameState.gameBoard.includes('')) {
+                announceDraw();
+                gameState.scores.draw++;
+                updateScoreDisplay();
+                addToHistory('draw');
+                gameState.gameActive = false;
+                saveGameData();
+                return;
+            }
+
+            gameState.currentPlayer = gameState.currentPlayer === 'X' ? 'O' : 'X';
+            updateCurrentPlayerDisplay();
+        }
+
+        function announceWinner(winner, combination) {
+            const winnerName = winner === 'X' ? gameState.player1Name : gameState.player2Name;
+            highlightWinningCells(combination);
+            
+            if (gameState.settings.confetti) {
+                createConfetti();
+            }
+            
+            if (gameState.settings.sound) {
+                playSound('win');
+            }
+            
+            showModal(`🎉 ${winnerName} Venceu!`, 'Parabéns pela vitória espetacular!');
+        }
+
+        function announceDraw() {
+            if (gameState.settings.sound) {
+                playSound('draw');
+            }
+            showModal('🤝 Empate!', 'Ninguém venceu desta vez!');
+        }
+
+        function highlightWinningCells(combination) {
+            const cells = document.querySelectorAll('.cell');
+            combination.forEach(index => {
+                cells[index].classList.add('winner');
+            });
+        }
+
+        function createConfetti() {
+            const colors = ['#667eea', '#764ba2', '#f093fb', '#f5576c', '#ffd700', '#ffed4e'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 30);
+            }
+        }
+
+        function playSound(type) {
+            // Simulação de sons (pode ser implementado com arquivos de áudio reais)
+            console.log(`Playing sound: ${type}`);
+        }
+
+        function showModal(title, text) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalText').textContent = text;
+            document.getElementById('gameModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('gameModal').classList.remove('active');
+        }
+
+        function updateCurrentPlayerDisplay() {
+            const indicator = document.getElementById('currentTurnIndicator');
+            const currentPlayerName = gameState.currentPlayer === 'X' ? gameState.player1Name : gameState.player2Name;
+            indicator.textContent = `VEZ DE ${gameState.currentPlayer} - ${currentPlayerName}`;
+        }
+
+        function updateScoreDisplay() {
+            document.getElementById('scoreX').textContent = gameState.scores.X;
+            document.getElementById('scoreO').textContent = gameState.scores.O;
+            document.getElementById('scoreDraw').textContent = gameState.scores.draw;
+        }
+
+        function addToHistory(winner) {
+            const date = new Date().toLocaleTimeString('pt-BR', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            
+            let resultText;
+            if (winner === 'draw') {
+                resultText = 'Empate';
+            } else {
+                const winnerName = winner === 'X' ? gameState.player1Name : gameState.player2Name;
+                resultText = `${winnerName} venceu`;
+            }
+
+            gameState.gameHistory.unshift({
+                time: date,
+                result: resultText,
+                winner: winner
+            });
+
+            if (gameState.gameHistory.length > 5) {
+                gameState.gameHistory.pop();
+            }
+
+            updateHistoryDisplay();
+        }
+
+        function updateHistoryDisplay() {
+            const historyList = document.getElementById('historyList');
+            
+            if (gameState.gameHistory.length === 0) {
+                historyList.innerHTML = '<p style="color: #999; text-align: center;">Nenhuma partida jogada ainda</p>';
+                return;
+            }
+
+            historyList.innerHTML = gameState.gameHistory.map(item => `
+                <div class="history-item">
+                    <span>${item.time}</span>
+                    <span class="winner-badge">${item.result}</span>
+                </div>
+            `).join('');
+        }
+
+        function resetGame() {
+            gameState.gameBoard = ['', '', '', '', '', '', '', '', ''];
+            gameState.gameActive = true;
+            gameState.currentPlayer = 'X';
+            
+            const cells = document.querySelectorAll('.cell');
+            cells.forEach(cell => {
+                cell.textContent = '';
+                cell.className = 'cell';
+            });
+
+            updateCurrentPlayerDisplay();
+            closeModal();
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            loadGameData();
+            
+            const cells = document.querySelectorAll('.cell');
+            cells.forEach(cell => {
+                cell.addEventListener('click', handleCellClick);
+            });
+
+            updateScoreDisplay();
+            updateCurrentPlayerDisplay();
+        });
+
+        // Fechar modal ao clicar fora
+        document.getElementById('gameModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
