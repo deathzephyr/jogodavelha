@@ -546,7 +546,6 @@
         .cell:hover:not(.cell-x):not(.cell-o) {
             transform: scale(1.05);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-            background: var(--board-bg);
         }
 
         .cell-x {
@@ -648,6 +647,7 @@
             box-shadow: 0 10px 40px var(--shadow);
             text-align: center;
             max-width: 400px;
+            width: 90%;
             animation: slideUp 0.3s ease;
         }
 
@@ -757,6 +757,293 @@
             to { transform: rotate(360deg); }
         }
 
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Avatar Customization */
+        .avatar-section {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: var(--board-bg);
+            border-radius: 15px;
+        }
+
+        .avatar-title {
+            font-size: 1.2em;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .avatar-preview {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .avatar-display {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-x), var(--accent-o));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .avatar-options {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .avatar-option {
+            aspect-ratio: 1;
+            background: var(--cell-bg);
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .avatar-option:hover {
+            transform: scale(1.1);
+            border-color: var(--accent-x);
+        }
+
+        .avatar-option.selected {
+            background: var(--accent-x);
+            border-color: var(--accent-x);
+        }
+
+        /* AI Difficulty Selection */
+        .difficulty-selector {
+            display: none;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: var(--board-bg);
+            border-radius: 15px;
+        }
+
+        .difficulty-selector.active {
+            display: block;
+        }
+
+        .difficulty-title {
+            font-size: 1.2em;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .difficulty-options {
+            display: flex;
+            gap: 10px;
+        }
+
+        .difficulty-btn {
+            flex: 1;
+            padding: 15px;
+            background: var(--cell-bg);
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .difficulty-btn:hover {
+            border-color: var(--accent-x);
+        }
+
+        .difficulty-btn.selected {
+            background: var(--accent-x);
+            color: white;
+            border-color: var(--accent-x);
+        }
+
+        .difficulty-icon {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+
+        .difficulty-name {
+            font-weight: 600;
+        }
+
+        /* Ranking Screen */
+        .ranking-screen {
+            background: var(--bg-secondary);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px var(--shadow);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .ranking-title {
+            font-size: 2em;
+            color: var(--text-primary);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .ranking-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .ranking-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: var(--board-bg);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .ranking-item:hover {
+            transform: translateX(5px);
+        }
+
+        .ranking-position {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.125rem;
+        }
+
+        .ranking-position.gold {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: white;
+        }
+
+        .ranking-position.silver {
+            background: linear-gradient(135deg, #e5e7eb, #9ca3af);
+            color: white;
+        }
+
+        .ranking-position.bronze {
+            background: linear-gradient(135deg, #f97316, #ea580c);
+            color: white;
+        }
+
+        .ranking-position.other {
+            background: var(--dark);
+            color: var(--text-secondary);
+        }
+
+        .ranking-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-x), var(--accent-o));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .ranking-info {
+            flex: 1;
+        }
+
+        .ranking-name {
+            font-weight: 600;
+            font-size: 1.125rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .ranking-stats {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .ranking-score {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        /* Room Creation/Joining */
+        .room-section {
+            display: none;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: var(--board-bg);
+            border-radius: 15px;
+        }
+
+        .room-section.active {
+            display: block;
+        }
+
+        .room-title {
+            font-size: 1.2em;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .room-code-display {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .room-code-input {
+            flex: 1;
+            padding: 15px;
+            font-size: 1.1em;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            background: var(--cell-bg);
+            color: var(--text-primary);
+            text-align: center;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .room-btn {
+            padding: 15px;
+            background: var(--accent-x);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .room-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .room-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .room-actions .setup-btn {
+            flex: 1;
+        }
+
         @media (max-width: 480px) {
             .game-title {
                 font-size: 2.5em;
@@ -789,6 +1076,14 @@
                 width: 100%;
                 justify-content: space-around;
             }
+
+            .avatar-options {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .difficulty-options {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -805,12 +1100,51 @@
                 <button class="menu-btn" onclick="showPlayerSetup()">
                     🎯 Jogar
                 </button>
+                <button class="menu-btn secondary" onclick="showAvatarCustomization()">
+                    👤 Personalizar Avatar
+                </button>
                 <button class="menu-btn secondary" onclick="showSettings()">
                     ⚙️ Configurações
+                </button>
+                <button class="menu-btn secondary" onclick="showRanking()">
+                    🏆 Ranking
                 </button>
                 <button class="menu-btn secondary" onclick="showHistory()">
                     📊 Histórico
                 </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tela de Personalização de Avatar -->
+    <div class="screen" id="avatarScreen">
+        <div class="player-setup">
+            <h2 class="setup-title">👤 Personalizar Avatar</h2>
+            
+            <div class="avatar-section">
+                <h3 class="avatar-title">Escolha seu Avatar</h3>
+                <div class="avatar-preview">
+                    <div class="avatar-display" id="avatarDisplay">😊</div>
+                </div>
+                <div class="avatar-options" id="avatarOptions">
+                    <div class="avatar-option selected" data-avatar="😊">😊</div>
+                    <div class="avatar-option" data-avatar="😎">😎</div>
+                    <div class="avatar-option" data-avatar="🤖">🤖</div>
+                    <div class="avatar-option" data-avatar="👽">👽</div>
+                    <div class="avatar-option" data-avatar="🦸">🦸</div>
+                    <div class="avatar-option" data-avatar="🧙">🧙</div>
+                    <div class="avatar-option" data-avatar="🥷">🥷</div>
+                    <div class="avatar-option" data-avatar="👻">👻</div>
+                    <div class="avatar-option" data-avatar="🐸">🐸</div>
+                    <div class="avatar-option" data-avatar="🦁">🦁</div>
+                    <div class="avatar-option" data-avatar="🦊">🦊</div>
+                    <div class="avatar-option" data-avatar="🐼">🐼</div>
+                </div>
+            </div>
+
+            <div class="setup-buttons">
+                <button class="setup-btn secondary" onclick="showMainMenu()">← Voltar</button>
+                <button class="setup-btn primary" onclick="saveAvatar()">Salvar Avatar</button>
             </div>
         </div>
     </div>
@@ -822,6 +1156,7 @@
             
             <div class="game-mode-selector">
                 <button class="mode-btn active" onclick="selectGameMode('local')">🏠 Local</button>
+                <button class="mode-btn" onclick="selectGameMode('ai')">🤖 Contra IA</button>
                 <button class="mode-btn" onclick="selectGameMode('online')">🌐 Online</button>
             </div>
 
@@ -836,18 +1171,41 @@
                 </div>
             </div>
 
-            <div id="onlineSetup" style="display: none;">
+            <div id="aiSetup" class="difficulty-selector">
+                <h3 class="difficulty-title">Nível de Dificuldade</h3>
+                <div class="difficulty-options">
+                    <div class="difficulty-btn" data-level="easy" onclick="selectDifficulty('easy')">
+                        <div class="difficulty-icon">😊</div>
+                        <div class="difficulty-name">Fácil</div>
+                    </div>
+                    <div class="difficulty-btn selected" data-level="medium" onclick="selectDifficulty('medium')">
+                        <div class="difficulty-icon">🤔</div>
+                        <div class="difficulty-name">Médio</div>
+                    </div>
+                    <div class="difficulty-btn" data-level="hard" onclick="selectDifficulty('hard')">
+                        <div class="difficulty-icon">😈</div>
+                        <div class="difficulty-name">Difícil</div>
+                    </div>
+                </div>
+                <div class="player-input-group">
+                    <label for="aiPlayerName">Seu Nome</label>
+                    <input type="text" id="aiPlayerName" class="player-input" placeholder="Digite seu nome..." maxlength="15">
+                </div>
+            </div>
+
+            <div id="onlineSetup" class="room-section">
+                <h3 class="room-title">Sala Online</h3>
+                <div class="room-code-display">
+                    <input type="text" id="roomCodeInput" class="room-code-input" placeholder="CÓDIGO" readonly>
+                    <button class="room-btn" onclick="generateRoomCode()">🔄</button>
+                </div>
                 <div class="player-input-group">
                     <label for="onlinePlayerName">Seu Nome</label>
                     <input type="text" id="onlinePlayerName" class="player-input" placeholder="Digite seu nome..." maxlength="15">
                 </div>
-                <div class="player-input-group">
-                    <label>Sala Online</label>
-                    <div style="display: flex; gap: 10px;">
-                        <input type="text" id="roomCodeInput" class="player-input" placeholder="Digite o código da sala">
-                        <button class="setup-btn primary" onclick="createRoom()">Criar</button>
-                        <button class="setup-btn secondary" onclick="joinRoom()">Entrar</button>
-                    </div>
+                <div class="room-actions">
+                    <button class="setup-btn primary" onclick="createRoom()">Criar Sala</button>
+                    <button class="setup-btn secondary" onclick="joinRoom()">Entrar em Sala</button>
                 </div>
             </div>
 
@@ -890,6 +1248,22 @@
         </div>
     </div>
 
+    <!-- Tela de Ranking -->
+    <div class="screen" id="rankingScreen">
+        <div class="ranking-screen">
+            <h2 class="ranking-title">🏆 Ranking Global</h2>
+            <div class="ranking-list" id="rankingList">
+                <div class="loading-state">
+                    <div class="loading"></div>
+                    <p>Carregando ranking...</p>
+                </div>
+            </div>
+            <div class="setup-buttons">
+                <button class="setup-btn secondary" onclick="showMainMenu()">← Voltar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Tela do Jogo -->
     <div class="screen" id="gameScreen">
         <div class="game-container">
@@ -903,6 +1277,7 @@
 
             <div class="player-info">
                 <div class="player-card player-x" id="player1Card">
+                    <div class="player-avatar" id="player1Avatar">😊</div>
                     <div class="player-name" id="player1Display">Jogador 1</div>
                     <div class="player-symbol">X</div>
                 </div>
@@ -910,6 +1285,7 @@
                     VEZ DE X
                 </div>
                 <div class="player-card player-o" id="player2Card">
+                    <div class="player-avatar" id="player2Avatar">😊</div>
                     <div class="player-name" id="player2Display">Jogador 2</div>
                     <div class="player-symbol">O</div>
                 </div>
@@ -1068,39 +1444,14 @@
 
             connect() {
                 try {
-                    // URL do seu servidor Railway - SUBSTITUA PELA SUA URL REAL
-                    const SERVER_URL = 'https://jogodavelha-production-29c9.up.railway.app';
-                    
-                    // Conectar ao servidor real com opções corretas
-                    this.socket = io(SERVER_URL, {
+                    // Conectar ao servidor real
+                    this.socket = io('http://localhost:3000', {
                         timeout: 5000,
                         reconnection: true,
                         reconnectionAttempts: this.maxReconnectAttempts,
                         reconnectionDelay: 1000
                     });
                     
-                    this.socket.on('connect', () => {
-                        console.log('✅ Conectado ao servidor!');
-                        this.isConnected = true;
-                        this.reconnectAttempts = 0;
-                        document.getElementById('serverStatus').textContent = 'Servidor Online';
-                        document.getElementById('serverStatus').style.color = '#4CAF50';
-                    });
-
-                    this.socket.on('disconnect', () => {
-                        console.log('❌ Desconectado do servidor!');
-                        this.isConnected = false;
-                        document.getElementById('serverStatus').textContent = 'Servidor Offline';
-                        document.getElementById('serverStatus').style.color = '#f44336';
-                    });
-
-                    this.socket.on('connect_error', (error) => {
-                        console.log('❌ Erro de conexão:', error);
-                        this.isConnected = false;
-                        document.getElementById('serverStatus').textContent = 'Erro de Conexão';
-                        document.getElementById('serverStatus').style.color = '#ff9800';
-                    });
-
                     this.setupEventListeners();
                 } catch (error) {
                     console.error('Erro ao conectar:', error);
@@ -1110,87 +1461,83 @@
             }
 
             setupEventListeners() {
+                // Conexão estabelecida
+                this.socket.on('connected', (data) => {
+                    console.log('Conectado ao servidor:', data);
+                    this.isConnected = true;
+                    this.reconnectAttempts = 0;
+                    document.getElementById('serverStatus').textContent = 'Servidor Online';
+                    document.getElementById('serverStatus').style.color = '#4CAF50';
+                });
+                
                 // Sala criada
                 this.socket.on('roomCreated', (data) => {
-                    console.log('🏠 Sala criada:', data);
+                    console.log('Sala criada:', data);
                     this.roomCode = data.roomCode;
                     this.playerSymbol = data.playerSymbol;
+                    
                     document.getElementById('roomCodeInput').value = data.roomCode;
                     showModal('🏠 Sala Criada!', `Código: ${data.roomCode}\nAguardando outro jogador...`);
                 });
-
+                
                 // Entrou na sala
                 this.socket.on('roomJoined', (data) => {
-                    console.log('✅ Entrou na sala:', data);
+                    console.log('Entrou na sala:', data);
                     this.roomCode = data.roomCode;
                     this.playerSymbol = data.playerSymbol;
                     this.opponentName = data.opponentName;
-                    showModal('✅ Conectado!', `Você entrou na sala com sucesso!`);
+                    
+                    showModal('✅ Conectado!', `Você entrou na sala ${data.roomCode}`);
                 });
-
+                
                 // Oponente entrou
                 this.socket.on('opponentJoined', (data) => {
-                    console.log('👤 Oponente entrou:', data);
+                    console.log('Oponente entrou:', data);
                     this.opponentName = data.opponentName;
                     gameState.player2Name = data.opponentName;
                     updatePlayerDisplays();
                     showModal('👤 Oponente Entrou!', `${data.opponentName} está na sala!`);
                 });
-
-                // Jogada recebida
+                
+                // Jogada feita
                 this.socket.on('moveMade', (data) => {
-                    console.log('🎮 Jogada recebida:', data);
-                    gameState.gameBoard = data.board;
-                    gameState.currentPlayer = data.currentPlayer;
-                    gameState.gameActive = data.gameActive;
-
-                    const cell = document.querySelector(`[data-index="${data.index}"]`);
-                    cell.textContent = data.player;
-                    cell.classList.add(`cell-${data.player.toLowerCase()}`);
-                    
-                    updateCurrentPlayerDisplay();
-                    soundSystem.playMove();
+                    console.log('Jogada feita:', data);
+                    updateBoard(data);
+                    updateTurnIndicator(data);
                 });
-
+                
                 // Fim de jogo
                 this.socket.on('gameOver', (data) => {
-                    console.log('🏁 Fim de jogo:', data);
-                    gameState.gameActive = false;
-                    
-                    if (data.winner === 'draw') {
-                        announceDraw();
-                    } else {
-                        announceWinner(data.winner);
-                    }
+                    console.log('Fim de jogo:', data);
+                    handleGameOver(data);
                 });
-
+                
                 // Jogo reiniciado
                 this.socket.on('gameReset', (data) => {
-                    console.log('🔄 Jogo reiniciado:', data);
-                    gameState.gameBoard = data.board;
-                    gameState.currentPlayer = data.currentPlayer;
-                    gameState.gameActive = data.gameActive;
-                    
-                    const cells = document.querySelectorAll('.cell');
-                    cells.forEach(cell => {
-                        cell.textContent = '';
-                        cell.className = 'cell';
-                    });
-                    
-                    updateCurrentPlayerDisplay();
+                    console.log('Jogo reiniciado:', data);
+                    resetBoard(data);
                 });
-
+                
                 // Jogador desconectou
                 this.socket.on('playerDisconnected', (data) => {
-                    console.log('👋 Jogador desconectou:', data);
-                    showModal('⚠️ Oponente Desconectou', `${data.playerName} saiu da partida.`);
+                    console.log('Jogador desconectou:', data);
+                    updateOpponentInfo('Aguardando...');
                     gameState.gameActive = false;
+                    showModal('👋 Jogador Desconectou', `${data.playerName} saiu da sala`);
                 });
-
-                // Erros
+                
+                // Erro
                 this.socket.on('error', (message) => {
-                    console.error('❌ Erro do servidor:', message);
+                    console.error('Erro do servidor:', message);
                     showModal('❌ Erro', message);
+                });
+                
+                // Desconexão
+                this.socket.on('disconnect', (reason) => {
+                    console.log('Desconectado do servidor:', reason);
+                    this.isConnected = false;
+                    document.getElementById('serverStatus').textContent = 'Servidor Offline';
+                    document.getElementById('serverStatus').style.color = '#f44336';
                 });
             }
 
@@ -1199,7 +1546,7 @@
                     showModal('❌ Sem Conexão', 'Você não está conectado ao servidor!');
                     return;
                 }
-                console.log('🏠 Criando sala para:', playerName);
+                console.log('Criando sala para:', playerName);
                 this.socket.emit('createRoom', playerName);
             }
 
@@ -1208,7 +1555,7 @@
                     showModal('❌ Sem Conexão', 'Você não está conectado ao servidor!');
                     return;
                 }
-                console.log('🚪 Entrando na sala:', roomCode, 'como:', playerName);
+                console.log('Entrando na sala:', roomCode, 'como:', playerName);
                 this.socket.emit('joinRoom', { roomCode, playerName });
             }
 
@@ -1216,7 +1563,7 @@
                 if (!this.isConnected || !gameState.gameActive) {
                     return;
                 }
-                console.log('🎮 Enviando jogada:', index);
+                console.log('Enviando jogada:', index);
                 this.socket.emit('makeMove', index);
             }
 
@@ -1224,22 +1571,121 @@
                 if (!this.isConnected) {
                     return;
                 }
-                console.log('🔄 Reiniciando jogo');
+                console.log('Reiniciando jogo');
                 this.socket.emit('resetGame');
+            }
+        }
+
+        // Sistema de IA
+        class AISystem {
+            constructor() {
+                this.difficulty = 'medium';
+            }
+
+            setDifficulty(level) {
+                this.difficulty = level;
+            }
+
+            makeMove(board) {
+                let index;
+                
+                switch(this.difficulty) {
+                    case 'easy':
+                        index = this.getRandomMove(board);
+                        break;
+                    case 'medium':
+                        index = Math.random() < 0.5 ? this.getBestMove(board) : this.getRandomMove(board);
+                        break;
+                    case 'hard':
+                        index = this.getBestMove(board);
+                        break;
+                }
+                
+                return index;
+            }
+
+            getRandomMove(board) {
+                const available = [];
+                for (let i = 0; i < 9; i++) {
+                    if (board[i] === '') {
+                        available.push(i);
+                    }
+                }
+                return available[Math.floor(Math.random() * available.length)];
+            }
+
+            getBestMove(board) {
+                // Tentar ganhar
+                for (let i = 0; i < 9; i++) {
+                    if (board[i] === '') {
+                        board[i] = 'O';
+                        if (this.checkWinner(board, 'O')) {
+                            board[i] = '';
+                            return i;
+                        }
+                        board[i] = '';
+                    }
+                }
+                
+                // Tentar bloquear
+                for (let i = 0; i < 9; i++) {
+                    if (board[i] === '') {
+                        board[i] = 'X';
+                        if (this.checkWinner(board, 'X')) {
+                            board[i] = '';
+                            return i;
+                        }
+                        board[i] = '';
+                    }
+                }
+                
+                // Centro
+                if (board[4] === '') return 4;
+                
+                // Cantos
+                const corners = [0, 2, 6, 8];
+                const availableCorners = corners.filter(i => board[i] === '');
+                if (availableCorners.length > 0) {
+                    return availableCorners[Math.floor(Math.random() * availableCorners.length)];
+                }
+                
+                // Bordas
+                const edges = [1, 3, 5, 7];
+                const availableEdges = edges.filter(i => board[i] === '');
+                if (availableEdges.length > 0) {
+                    return availableEdges[Math.floor(Math.random() * availableEdges.length)];
+                }
+                
+                return this.getRandomMove(board);
+            }
+
+            checkWinner(board, player) {
+                const winPatterns = [
+                    [0, 1, 2], [3, 4, 5], [6, 7, 8], // Linhas
+                    [0, 3, 6], [1, 4, 7], [2, 5, 8], // Colunas
+                    [0, 4, 8], [2, 4, 6] // Diagonais
+                ];
+                
+                return winPatterns.some(pattern => {
+                    return pattern.every(index => board[index] === player);
+                });
             }
         }
 
         // Estado do Jogo
         const gameState = {
             currentPlayer: 'X',
-            gameBoard: ['', '', '', '', '', '', '', ''],
+            gameBoard: ['', '', '', '', '', '', '', '', ''],
             gameActive: true,
             gameMode: 'local',
             player1Name: 'Jogador 1',
             player2Name: 'Jogador 2',
-            onlinePlayerName: '',
+            player1Avatar: '😊',
+            player2Avatar: '😊',
+            userAvatar: '😊',
             roomCode: '',
-            isHost: false,
+            playerSymbol: '',
+            aiDifficulty: 'medium',
             scores: {
                 X: 0,
                 O: 0,
@@ -1251,11 +1697,13 @@
                 animation: true,
                 confetti: true,
                 darkTheme: false
-            }
+            },
+            ranking: []
         };
 
         const soundSystem = new SoundSystem();
         const onlineSystem = new OnlineGameSystem();
+        const aiSystem = new AISystem();
         const winningConditions = [
             [0, 1, 2],
             [3, 4, 5],
@@ -1275,6 +1723,7 @@
                 Object.assign(gameState, data);
                 updateSettingsDisplay();
                 applyTheme();
+                updateAvatarDisplay();
             }
         }
 
@@ -1299,11 +1748,22 @@
             showScreen('playerSetup');
             document.getElementById('player1Name').value = gameState.player1Name;
             document.getElementById('player2Name').value = gameState.player2Name;
-            document.getElementById('onlinePlayerName').value = gameState.onlinePlayerName;
+            document.getElementById('aiPlayerName').value = gameState.player1Name;
+            document.getElementById('onlinePlayerName').value = gameState.player1Name;
+        }
+
+        function showAvatarCustomization() {
+            showScreen('avatarScreen');
+            updateAvatarOptions();
         }
 
         function showSettings() {
             showScreen('settingsScreen');
+        }
+
+        function showRanking() {
+            showScreen('rankingScreen');
+            updateRankingDisplay();
         }
 
         function showHistory() {
@@ -1319,58 +1779,54 @@
             });
             event.target.classList.add('active');
 
+            // Esconder todas as seções
+            document.getElementById('localSetup').style.display = 'none';
+            document.getElementById('aiSetup').classList.remove('active');
+            document.getElementById('onlineSetup').classList.remove('active');
+
+            // Mostrar a seção correspondente
             if (mode === 'local') {
                 document.getElementById('localSetup').style.display = 'block';
-                document.getElementById('onlineSetup').style.display = 'none';
-            } else {
-                document.getElementById('localSetup').style.display = 'none';
-                document.getElementById('onlineSetup').style.display = 'block';
+            } else if (mode === 'ai') {
+                document.getElementById('aiSetup').classList.add('active');
+            } else if (mode === 'online') {
+                document.getElementById('onlineSetup').classList.add('active');
             }
         }
 
-        // Funções de sala online REAIS
-        function createRoom() {
-            const playerName = document.getElementById('onlinePlayerName').value.trim();
-            if (!playerName) {
-                showModal('⚠️ Nome Obrigatório', 'Digite seu nome para criar uma sala!');
-                return;
-            }
-            onlineSystem.createRoom(playerName);
+        // Seleção de dificuldade da IA
+        function selectDifficulty(level) {
+            gameState.aiDifficulty = level;
+            aiSystem.setDifficulty(level);
+            document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            document.querySelector(`[data-level="${level}"]`).classList.add('selected');
         }
 
-        function joinRoom() {
-            const roomCode = document.getElementById('roomCodeInput').value.trim();
-            const playerName = document.getElementById('onlinePlayerName').value.trim();
-            
-            if (!roomCode || !playerName) {
-                showModal('⚠️ Dados Incompletos', 'Digite seu nome e o código da sala!');
-                return;
-            }
-            
-            onlineSystem.joinRoom(roomCode, playerName);
-        }
-
-        function startGame() {
-            if (gameState.gameMode === 'local') {
-                const player1Input = document.getElementById('player1Name').value.trim();
-                const player2Input = document.getElementById('player2Name').value.trim();
-
-                gameState.player1Name = player1Input || 'Jogador 1';
-                gameState.player2Name = player2Input || 'Jogador 2';
-            } else {
-                const onlineName = document.getElementById('onlinePlayerName').value.trim();
-                gameState.onlinePlayerName = onlineName || 'Você';
-                
-                if (!onlineSystem.roomCode) {
-                    showModal('⚠️ Sala Necessária', 'Crie ou entre em uma sala para jogar online!');
-                    return;
+        // Avatar Customization
+        function updateAvatarOptions() {
+            document.querySelectorAll('.avatar-option').forEach(option => {
+                option.classList.remove('selected');
+                if (option.dataset.avatar === gameState.userAvatar) {
+                    option.classList.add('selected');
                 }
-            }
+            });
+            updateAvatarDisplay();
+        }
 
-            updatePlayerDisplays();
-            resetGame();
-            showScreen('gameScreen');
-            saveGameData();
+        function updateAvatarDisplay() {
+            document.getElementById('avatarDisplay').textContent = gameState.userAvatar;
+        }
+
+        function saveAvatar() {
+            const selectedAvatar = document.querySelector('.avatar-option.selected');
+            if (selectedAvatar) {
+                gameState.userAvatar = selectedAvatar.dataset.avatar;
+                gameState.player1Avatar = gameState.userAvatar;
+                saveGameData();
+                showModal('✅ Avatar Salvo!', 'Seu avatar foi atualizado com sucesso!');
+            }
         }
 
         // Configurações
@@ -1412,13 +1868,105 @@
         }
 
         function resetAllData() {
-            if (confirm('Tem certeza que deseja zerar TODOS os dados? Isso inclui placar, histórico e configurações.')) {
+            if (confirm('Tem certeza que deseja zerar TODOS os dados? Isso inclui placar, histórico, ranking e configurações.')) {
                 localStorage.removeItem('ticTacToeUltraData');
                 location.reload();
             }
         }
 
-        // Lógica do Jogo
+        // Funções de sala online
+        function generateRoomCode() {
+            const code = Math.random().toString(36).substring(2, 8).toUpperCase();
+            document.getElementById('roomCodeInput').value = code;
+        }
+
+        function createRoom() {
+            const playerName = document.getElementById('onlinePlayerName').value.trim();
+            if (!playerName) {
+                showModal('⚠️ Nome Obrigatório', 'Por favor, digite seu nome para criar uma sala!');
+                return;
+            }
+            
+            gameState.player1Name = playerName;
+            gameState.player1Avatar = gameState.userAvatar;
+            onlineSystem.createRoom(playerName);
+        }
+
+        function joinRoom() {
+            const roomCode = document.getElementById('roomCodeInput').value.trim();
+            const playerName = document.getElementById('onlinePlayerName').value.trim();
+            
+            if (!roomCode || !playerName) {
+                showModal('⚠️ Dados Incompletos', 'Por favor, digite o código da sala e seu nome!');
+                return;
+            }
+            
+            gameState.player1Name = playerName;
+            gameState.player1Avatar = gameState.userAvatar;
+            onlineSystem.joinRoom(roomCode, playerName);
+        }
+
+        // Iniciar jogo
+        function startGame() {
+            if (gameState.gameMode === 'local') {
+                const player1Input = document.getElementById('player1Name').value.trim();
+                const player2Input = document.getElementById('player2Name').value.trim();
+
+                gameState.player1Name = player1Input || 'Jogador 1';
+                gameState.player2Name = player2Input || 'Jogador 2';
+            } else if (gameState.gameMode === 'ai') {
+                const aiPlayerInput = document.getElementById('aiPlayerName').value.trim();
+                gameState.player1Name = aiPlayerInput || 'Você';
+                gameState.player2Name = 'IA';
+                gameState.player2Avatar = '🤖';
+            } else if (gameState.gameMode === 'online') {
+                const onlinePlayerInput = document.getElementById('onlinePlayerName').value.trim();
+                gameState.player1Name = onlinePlayerInput || 'Jogador';
+                
+                if (!onlineSystem.roomCode) {
+                    showModal('⚠️ Sala Necessária', 'Crie ou entre em uma sala para jogar online!');
+                    return;
+                }
+            }
+
+            updatePlayerDisplays();
+            resetGame();
+            showScreen('gameScreen');
+            saveGameData();
+        }
+
+        // Atualizar displays dos jogadores
+        function updatePlayerDisplays() {
+            document.getElementById('player1Display').textContent = gameState.player1Name;
+            document.getElementById('player2Display').textContent = gameState.player2Name;
+            document.getElementById('player1Label').textContent = gameState.player1Name;
+            document.getElementById('player2Label').textContent = gameState.player2Name;
+            document.getElementById('player1Avatar').textContent = gameState.player1Avatar;
+            document.getElementById('player2Avatar').textContent = gameState.player2Avatar;
+
+            // Atualizar status de conexão
+            const connectionStatus = document.getElementById('connectionStatus');
+            const connectionText = document.getElementById('connectionText');
+            
+            if (gameState.gameMode === 'online') {
+                connectionStatus.style.background = 'rgba(76, 175, 80, 0.2)';
+                connectionStatus.style.borderColor = '#4CAF50';
+                connectionStatus.style.color = '#4CAF50';
+                connectionText.textContent = `Sala: ${onlineSystem.roomCode}`;
+            } else if (gameState.gameMode === 'ai') {
+                connectionStatus.style.background = 'rgba(255, 152, 0, 0.2)';
+                connectionStatus.style.borderColor = '#FF9800';
+                connectionStatus.style.color = '#FF9800';
+                connectionText.textContent = 'Contra IA';
+            } else {
+                connectionStatus.style.background = 'rgba(255, 152, 0, 0.2)';
+                connectionStatus.style.borderColor = '#FF9800';
+                connectionStatus.style.color = '#FF9800';
+                connectionText.textContent = 'Local';
+            }
+        }
+
+        // Lógica do jogo
         function handleCellClick(event) {
             const cell = event.target;
             const index = parseInt(cell.getAttribute('data-index'));
@@ -1431,13 +1979,75 @@
                 // Enviar jogada para o servidor REAL
                 onlineSystem.makeMove(index);
             } else {
-                // Lógica local normal
-                gameState.gameBoard[index] = gameState.currentPlayer;
-                cell.textContent = gameState.currentPlayer;
-                cell.classList.add(`cell-${gameState.currentPlayer.toLowerCase()}`);
-                soundSystem.playMove();
-                checkResult();
+                // Lógica local ou contra IA
+                makeMove(index);
             }
+        }
+
+        function makeMove(index) {
+            gameState.gameBoard[index] = gameState.currentPlayer;
+            
+            const cell = document.querySelector(`[data-index="${index}"]`);
+            cell.textContent = gameState.currentPlayer;
+            cell.classList.add(`cell-${gameState.currentPlayer.toLowerCase()}`);
+            
+            soundSystem.playMove();
+            
+            checkResult();
+            
+            if (gameState.gameActive) {
+                gameState.currentPlayer = gameState.currentPlayer === 'X' ? 'O' : 'X';
+                updateTurnIndicator();
+                
+                // Se for contra IA e for a vez da IA
+                if (gameState.gameMode === 'ai' && gameState.currentPlayer === 'O') {
+                    setTimeout(() => {
+                        const aiMove = aiSystem.makeMove(gameState.gameBoard);
+                        if (aiMove !== -1) {
+                            makeMove(aiMove);
+                        }
+                    }, 500);
+                }
+            }
+        }
+
+        function updateBoard(data) {
+            gameState.gameBoard = data.board;
+            updateBoardDisplay();
+        }
+
+        function updateBoardDisplay() {
+            document.querySelectorAll('.cell').forEach((cell, index) => {
+                cell.textContent = gameState.gameBoard[index];
+                cell.className = 'cell';
+                
+                if (gameState.gameBoard[index]) {
+                    cell.classList.add('taken', gameState.gameBoard[index].toLowerCase());
+                }
+            });
+        }
+
+        function updateTurnIndicator(data) {
+            const indicator = document.getElementById('turnIndicator');
+            
+            if (gameState.gameActive) {
+                const currentPlayer = data ? data.currentPlayer : gameState.currentPlayer;
+                const isMyTurn = currentPlayer === (gameState.gameMode === 'online' ? onlineSystem.playerSymbol : gameState.currentPlayer);
+                
+                if (isMyTurn || gameState.gameMode !== 'online') {
+                    const currentPlayerName = currentPlayer === 'X' ? gameState.player1Name : gameState.player2Name;
+                    indicator.innerHTML = `VEZ DE ${currentPlayer} - ${currentPlayerName}`;
+                } else {
+                    indicator.innerHTML = `VEZ DE ${data ? data.currentPlayer : gameState.currentPlayer} - ${onlineSystem.opponentName}`;
+                }
+            } else {
+                indicator.innerHTML = 'Aguardando oponente...';
+            }
+            
+            // Atualizar cards dos jogadores
+            const currentPlayer = data ? data.currentPlayer : gameState.currentPlayer;
+            document.getElementById('player1Card').classList.toggle('active', currentPlayer === 'X');
+            document.getElementById('player2Card').classList.toggle('active', currentPlayer === 'O');
         }
 
         function checkResult() {
@@ -1457,8 +2067,7 @@
 
             if (roundWon) {
                 announceWinner(gameState.currentPlayer, winningCombination);
-                gameState.scores[gameState.currentPlayer]++;
-                updateScoreDisplay();
+                updateScore(gameState.currentPlayer);
                 addToHistory(gameState.currentPlayer);
                 gameState.gameActive = false;
                 saveGameData();
@@ -1467,20 +2076,15 @@
 
             if (!gameState.gameBoard.includes('')) {
                 announceDraw();
-                gameState.scores.draw++;
-                updateScoreDisplay();
+                updateScore('draw');
                 addToHistory('draw');
                 gameState.gameActive = false;
                 saveGameData();
                 return;
             }
-
-            gameState.currentPlayer = gameState.currentPlayer === 'X' ? 'O' : 'X';
-            updateCurrentPlayerDisplay();
         }
 
         function announceWinner(winner, combination) {
-            const winnerName = winner === 'X' ? gameState.player1Name : gameState.player2Name;
             highlightWinningCells(combination);
             
             if (gameState.settings.confetti) {
@@ -1488,18 +2092,22 @@
             }
             
             soundSystem.playWin();
+            
+            const winnerName = winner === 'X' ? gameState.player1Name : gameState.player2Name;
             showModal(`🎉 ${winnerName} Venceu!`, 'Parabéns pela vitória espetacular!');
+            
+            // Atualizar ranking
+            updateRanking(winner === 'X' ? gameState.player1Name : gameState.player2Name, 1);
         }
 
         function announceDraw() {
             soundSystem.playDraw();
-            showModal('🤝 Empate!', 'Ninguém venceu desta vez!');
+            showModal('🤝 Empate!', 'O jogo terminou empatado!');
         }
 
         function highlightWinningCells(combination) {
-            const cells = document.querySelectorAll('.cell');
             combination.forEach(index => {
-                cells[index].classList.add('winner');
+                document.querySelector(`[data-index="${index}"]`).classList.add('winner');
             });
         }
 
@@ -1519,58 +2127,15 @@
             }
         }
 
-        function showModal(title, text) {
-            document.getElementById('modalTitle').textContent = title;
-            document.getElementById('modalText').textContent = text;
-            document.getElementById('gameModal').classList.add('active');
-        }
-
-        function closeModal() {
-            document.getElementById('gameModal').classList.remove('active');
-        }
-
-        function updatePlayerDisplays() {
-            document.getElementById('player1Display').textContent = gameState.player1Name;
-            document.getElementById('player2Display').textContent = gameState.player2Name;
-            document.getElementById('player1Label').textContent = gameState.player1Name;
-            document.getElementById('player2Label').textContent = gameState.player2Name;
-
-            // Atualizar status de conexão
-            const connectionStatus = document.getElementById('connectionStatus');
-            const connectionText = document.getElementById('connectionText');
-            
-            if (gameState.gameMode === 'online') {
-                connectionStatus.style.background = 'rgba(76, 175, 80, 0.2)';
-                connectionStatus.style.borderColor = '#4CAF50';
-                connectionStatus.style.color = '#4CAF50';
-                connectionText.textContent = `Sala: ${onlineSystem.roomCode}`;
+        function updateScore(winner) {
+            if (winner === 'draw') {
+                gameState.scores.draw++;
+            } else if (winner === 'X') {
+                gameState.scores.X++;
             } else {
-                connectionStatus.style.background = 'rgba(255, 152, 0, 0.2)';
-                connectionStatus.style.borderColor = '#FF9800';
-                connectionStatus.style.color = '#FF9800';
-                connectionText.textContent = 'Local';
+                gameState.scores.O++;
             }
-        }
-
-        function updateCurrentPlayerDisplay() {
-            const turnIndicator = document.getElementById('turnIndicator');
-            const currentPlayerName = gameState.currentPlayer === 'X' ? gameState.player1Name : gameState.player2Name;
-            turnIndicator.textContent = `VEZ DE ${gameState.currentPlayer} - ${currentPlayerName}`;
-
-            // Atualizar cards dos jogadores
-            const player1Card = document.getElementById('player1Card');
-            const player2Card = document.getElementById('player2Card');
             
-            if (gameState.currentPlayer === 'X') {
-                player1Card.classList.add('active');
-                player2Card.classList.remove('active');
-            } else {
-                player1Card.classList.remove('active');
-                player2Card.classList.add('active');
-            }
-        }
-
-        function updateScoreDisplay() {
             document.getElementById('scoreX').textContent = gameState.scores.X;
             document.getElementById('scoreO').textContent = gameState.scores.O;
             document.getElementById('scoreDraw').textContent = gameState.scores.draw;
@@ -1614,29 +2179,137 @@
 
             historyList.innerHTML = gameState.gameHistory.map(item => `
                 <div class="history-item">
-                    <span>${item.time} ${item.mode === 'online' ? '🌐' : '🏠'}</span>
+                    <span>${item.time} ${item.mode === 'online' ? '🌐' : item.mode === 'ai' ? '🤖' : '🏠'}</span>
                     <span class="winner-badge">${item.result}</span>
                 </div>
             `).join('');
+        }
+
+        function updateRanking(playerName, points) {
+            // Verificar se o jogador já está no ranking
+            let playerIndex = gameState.ranking.findIndex(p => p.name === playerName);
+            
+            if (playerIndex === -1) {
+                // Adicionar novo jogador ao ranking
+                gameState.ranking.push({
+                    name: playerName,
+                    avatar: gameState.player1Avatar,
+                    points: points,
+                    wins: points,
+                    losses: 0,
+                    draws: 0
+                });
+            } else {
+                // Atualizar pontos do jogador existente
+                gameState.ranking[playerIndex].points += points;
+                gameState.ranking[playerIndex].wins += 1;
+            }
+            
+            // Ordenar ranking por pontos
+            gameState.ranking.sort((a, b) => b.points - a.points);
+            
+            // Manter apenas os 10 melhores
+            if (gameState.ranking.length > 10) {
+                gameState.ranking = gameState.ranking.slice(0, 10);
+            }
+            
+            saveGameData();
+        }
+
+        function updateRankingDisplay() {
+            const rankingList = document.getElementById('rankingList');
+            
+            if (gameState.ranking.length === 0) {
+                rankingList.innerHTML = '<p style="color: var(--text-secondary); text-align: center;">Nenhuma partida jogada ainda</p>';
+                return;
+            }
+            
+            rankingList.innerHTML = gameState.ranking.map((player, index) => {
+                const positionClass = index === 0 ? 'gold' : index === 1 ? 'silver' : index === 2 ? 'bronze' : 'other';
+                const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}.`;
+                
+                return `
+                    <div class="ranking-item">
+                        <div class="ranking-position ${positionClass}">${medal}</div>
+                        <div class="ranking-avatar">${player.avatar}</div>
+                        <div class="ranking-info">
+                            <div class="ranking-name">${player.name}</div>
+                            <div class="ranking-stats">${player.wins} vitórias</div>
+                        </div>
+                        <div class="ranking-score">${player.points}</div>
+                    </div>
+                `;
+            }).join('');
         }
 
         function resetGame() {
             if (gameState.gameMode === 'online') {
                 onlineSystem.resetGame();
             } else {
-                gameState.gameBoard = ['', '', '', '', '', '', '', ''];
-                gameState.gameActive = true;
+                gameState.gameBoard = ['', '', '', '', '', '', '', '', ''];
                 gameState.currentPlayer = 'X';
+                gameState.gameActive = true;
                 
                 const cells = document.querySelectorAll('.cell');
                 cells.forEach(cell => {
                     cell.textContent = '';
                     cell.className = 'cell';
                 });
+                
+                updateTurnIndicator();
+            }
+        }
+
+        function resetBoard(data) {
+            gameState.gameBoard = data.board;
+            gameState.currentPlayer = data.currentPlayer;
+            gameState.gameActive = data.gameActive;
+            
+            updateBoardDisplay();
+            updateTurnIndicator(data);
+        }
+
+        function handleGameOver(data) {
+            gameState.gameActive = false;
+            
+            // Destacar células vencedoras
+            if (data.winner !== 'draw') {
+                const winPatterns = [
+                    [0, 1, 2], [3, 4, 5], [6, 7, 8],
+                    [0, 3, 6], [1, 4, 7], [2, 5, 8],
+                    [0, 4, 8], [2, 4, 6]
+                ];
+                
+                for (const pattern of winPatterns) {
+                    const [a, b, c] = pattern;
+                    if (data.board[a] && 
+                        data.board[a] === data.board[b] && 
+                        data.board[a] === data.board[c]) {
+                        document.querySelector(`[data-index="${a}"]`).classList.add('winner');
+                        document.querySelector(`[data-index="${b}"]`).classList.add('winner');
+                        document.querySelector(`[data-index="${c}"]`).classList.add('winner');
+                        break;
+                    }
+                }
             }
             
-            updateCurrentPlayerDisplay();
-            closeModal();
+            // Mostrar modal de fim de jogo
+            if (data.winner === 'draw') {
+                showModal('🤝 Empate!', 'O jogo terminou empatado!');
+            } else {
+                const winnerName = data.winnerName || 'Alguém';
+                showModal(`🎉 ${winnerName} Venceu!`, 'Parabéns pela vitória!');
+            }
+        }
+
+        function showModal(title, text) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalText').textContent = text;
+            document.getElementById('gameModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('gameModal').classList.remove('active');
         }
 
         // Inicialização
@@ -1646,15 +2319,34 @@
             // Conectar ao servidor automaticamente
             onlineSystem.connect();
             
+            // Configurar event listeners para as células do tabuleiro
             const cells = document.querySelectorAll('.cell');
             cells.forEach(cell => {
                 cell.addEventListener('click', handleCellClick);
             });
-
+            
+            // Configurar event listeners para opções de avatar
+            const avatarOptions = document.querySelectorAll('.avatar-option');
+            avatarOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    document.querySelectorAll('.avatar-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    option.classList.add('selected');
+                    document.getElementById('avatarDisplay').textContent = option.dataset.avatar;
+                });
+            });
+            
+            // Atualizar displays iniciais
             updateScoreDisplay();
-            updateCurrentPlayerDisplay();
-            soundSystem.toggle(gameState.settings.sound);
+            updateTurnIndicator();
         });
+
+        function updateScoreDisplay() {
+            document.getElementById('scoreX').textContent = gameState.scores.X;
+            document.getElementById('scoreO').textContent = gameState.scores.O;
+            document.getElementById('scoreDraw').textContent = gameState.scores.draw;
+        }
 
         // Fechar modal ao clicar fora
         document.getElementById('gameModal').addEventListener('click', function(e) {
