@@ -1069,7 +1069,9 @@
             connect() {
                 try {
                     // Conectar ao servidor real
-                    this.socket = io('http://localhost:3000', {
+                    // Mude para:
+const SERVER_URL = 'jogodavelha-production-29c9.up.railway.app';
+this.socket = io(SERVER_URL);
                         timeout: 5000,
                         reconnection: true,
                         reconnectionAttempts: this.maxReconnectAttempts,
@@ -1667,3 +1669,4 @@
     </script>
 </body>
 </html>
+
