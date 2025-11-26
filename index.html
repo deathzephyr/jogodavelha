@@ -1068,10 +1068,11 @@
 
             connect() {
                 try {
-                    // Conectar ao servidor real
-                    // Mude para:
-const SERVER_URL = 'jogodavelha-production-29c9.up.railway.app';
-this.socket = io(SERVER_URL);
+                    // URL do seu servidor Railway - SUBSTITUA PELA SUA URL REAL
+                    const SERVER_URL = 'https://jogodavelha-production-29c9.up.railway.app';
+                    
+                    // Conectar ao servidor real com opções corretas
+                    this.socket = io(SERVER_URL, {
                         timeout: 5000,
                         reconnection: true,
                         reconnectionAttempts: this.maxReconnectAttempts,
@@ -1669,4 +1670,3 @@ this.socket = io(SERVER_URL);
     </script>
 </body>
 </html>
-
